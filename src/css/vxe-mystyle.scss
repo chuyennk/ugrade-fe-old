@@ -1,0 +1,37 @@
+@import "../../node_modules/vxe-table/styles/variable.scss";
+// Sample
+$vxe-font-size: 14px;
+$vxe-font-color: rgb(0, 0, 0);
+$vxe-primary-color: #409eff;
+$vxe-table-font-color: $vxe-font-color;
+$vxe-table-border-color: #e8eaec;
+$vxe-table-border-radius: 4px;
+$vxe-font-size-mini: 12px;
+$vxe-table-row-height-mini: 26px;
+$vxe-table-menu-item-width: 250px;
+// ...
+// This settings are to show a remark at top right corner of the vxe-table when there is a comment
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+//this style is to show the mark at top right corner if there is a note/comment
+.vxe-body--column {
+  &.col--dirty--comment {
+    position: relative;
+    &:before {
+      content: "";
+      top: -$vxe-table-cell-dirty-width;
+      right: -$vxe-table-cell-dirty-width;
+      position: absolute;
+      border-width: $vxe-table-cell-dirty-width;
+      border-style: solid;
+      border-color: transparent $vxe-table-cell-dirty-update-color transparent
+        transparent;
+      transform: rotate(135deg);
+    }
+  }
+}
+@import "../../node_modules/vxe-table/styles/modules.scss";
