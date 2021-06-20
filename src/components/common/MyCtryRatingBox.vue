@@ -4,6 +4,7 @@
 			<col style="width: 100px" />
 			<col style="width: 150px" />
 			<col style="width: 80px" />
+			
 			<thead>
 				<tr>
 					<th class="text-left" rowspan="2"></th>
