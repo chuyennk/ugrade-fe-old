@@ -8,9 +8,9 @@
 				  <tr>
 					  <td v-for="field, idx in row.values" :key="idx" align="center">
 			  <div >
-				  <div v-if="row.type=='input'" class="inline-block" style="border: 1px solid; color: red; width: 100%"><q-input v-model="field.value" dense outlined :input-class="row.align? row.align: 'text-left'"/></div>
-				  <div v-if="row.type=='select'" class="inline-block" style="border: 1px solid; color: red; width: 100%">
-						<q-select v-model="field.value" :options="formData.params[row.param]" dense options-dense>
+				  <div v-if="row.type=='input'" class="inline-block" style="width: 100%"><q-input v-model="field.value" dense outlined :input-class="row.align? row.align: 'text-left'"/></div>
+				  <div v-if="row.type=='select'" class="inline-block" style="width: 100%">
+						<q-select v-model="field.value" :options="formData.params[row.param]" outlined :hide-bottom-space="true" dense options-dense>
 							<template v-slot:selected>
 								<div style="width: 100%" class="text-center">{{field.value}}</div>
 							</template>
@@ -28,7 +28,7 @@
   </div>
 </template>
 
-<script lang="js">
+<script>
 import { defineComponent, computed } from 'vue'
 
 export default defineComponent({
@@ -40,6 +40,8 @@ export default defineComponent({
 			get: () => props.modelValue,
 			set: (val) => this.$emit('update:modelValue', val)
 		})
+
+
 		return {
 			formData
 		}
@@ -51,5 +53,6 @@ export default defineComponent({
 	.table-header {width: 100%; table-layout: fixed; border-collapse: collapse}
 	/* .table-header td {width: 350px}
 	.table-header td:last-child {width: 100%} */
-	.q-field--dense .q-field__control {height: 30px;}
-</style>
+.q-field--dense .q-field__control, .q-field--dense .q-field__marginal {
+    height: 30px;
+}</style>
