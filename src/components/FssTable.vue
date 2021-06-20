@@ -1,5 +1,6 @@
 <template>
 	<div>
+		<fss-header v-model="formHeaders"/>
 		<vxe-table
 			ref="xTable"
 			keep-source
@@ -70,6 +71,7 @@
 import { defineComponent, computed, ref, reactive } from 'vue'
 import { VXETable } from 'vxe-table'
 import { clone as XEclone, commafy as XEcommafy, groupBy as XEgroupBy, sum as XEsum } from 'xe-utils'
+import FssHeader from './common/FssHeader.vue'
 import { date } from 'quasar'
 import * as math from 'mathjs'
 import { useStore } from 'vuex'
@@ -77,6 +79,7 @@ import { useStore } from 'vuex'
 export default defineComponent({
 	name: 'FssTable',
 	props: ['fssTitle', 'fssType'],
+	components: {FssHeader},
 	setup(props) {
 		const CAT_LINES = ['CAT', 'ITEMCAT', 'CALC_CAT', 'CALC_ITEM', 'CONTROL']
 		const ITEM_LINES = ['ITEM', 'ITEMCAT']
@@ -507,6 +510,24 @@ export default defineComponent({
 			},
 		})
 
+		const formHeaders = ref(null)
+
+		formHeaders.value = {
+			params: {
+				AuditType: ['Audited', 'Unaudited', 'Management', 'Draft'], 
+				Denominator: ['Million', 'Thousand'],
+				Ccy: ['USD', 'SGD', 'VND'],
+			},
+			columns: {labelwidth: 350},
+			rows: [
+				{label: "Customer Name",  type: 'input', values: [{value: "test customer"}]},
+				{label: "Customer ID", type: 'input', values: [{value: "T1234567"}]},
+				{label: 'Financial Date', type: 'display', values: [{value: '31 Dec 2016'}, {value: '31 Dec 2017'}, {value: '31 Dec 2018'}, {value: '31 Dec 2019'}, {value: '31 Dec 2020'}]},
+				{label: 'Months Cover', type: 'input', align:'text-center', validate: 'checkMthCover', values: [{value: '12'}, {value: '12'}, {value: '12'}, {value: '12'}, {value: '12'}]},
+				{label: 'Audit Type', type: 'select', param:'AuditType', values: [{value: 'Audited'}, {value: 'Audited'}, {value: 'Audited'}, {value: 'Unaudited'}, {value: 'Management'}]},
+			]
+		}
+
 		// harcoding this to force FSS recalculate all the cashflow & ratioComp
 		// calc_CashflowRatioComp('AmtYr1')
 
@@ -514,6 +535,7 @@ export default defineComponent({
 			FssType,
 			fssData,
 			fssHeaders,
+			formHeaders,
 			// fssItems,
 
 			xTable,
