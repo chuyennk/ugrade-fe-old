@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<fss-header v-model="formHeaders"/>
+		<fss-header v-show="isShowHeaders" v-model="formHeaders"/>
 		<vxe-table
 			ref="xTable"
 			keep-source
@@ -301,9 +301,12 @@ export default defineComponent({
 			await $table.setCurrentRow(row)
 		}
 
+		const isShowHeaders = ref(false)
+
 		const contextMenuClickEvent = async ({ menu, row, column }) => {
 			if (menu.code == 'showFinHeaders') {
-				await VXETable.modal.alert({ message: 'This function will be done very soon.', status: 'info', confirmButtonText: 'OK' })
+				isShowHeaders.value = !isShowHeaders.value
+				// await VXETable.modal.alert({ message: 'This function will be done very soon.', status: 'info', confirmButtonText: 'OK' })
 			}
 			if (menu.code == 'showCategory') {
 				let col = xTable.value.getColumnByField('CatCode')
@@ -525,6 +528,8 @@ export default defineComponent({
 				{label: 'Financial Date', type: 'display', values: [{value: '31 Dec 2016'}, {value: '31 Dec 2017'}, {value: '31 Dec 2018'}, {value: '31 Dec 2019'}, {value: '31 Dec 2020'}]},
 				{label: 'Months Cover', type: 'input', align:'text-center', validate: 'checkMthCover', values: [{value: '12'}, {value: '12'}, {value: '12'}, {value: '12'}, {value: '12'}]},
 				{label: 'Audit Type', type: 'select', param:'AuditType', values: [{value: 'Audited'}, {value: 'Audited'}, {value: 'Audited'}, {value: 'Unaudited'}, {value: 'Management'}]},
+				{label: 'Currency', type: 'select', param: 'Ccy', values: [{value: 'USD'}, {value: 'USD'}, {value: 'USD'}, {value: 'USD'}, {value: 'USD'}]},
+				{label: 'Denominator', type: 'select', param: 'Denominator', values: [{value: 'Thousand'}, {value: 'Thousand'}, {value: 'Thousand'}, {value: 'Thousand'}, {value: 'Thousand'},]}
 			]
 		}
 
@@ -536,6 +541,7 @@ export default defineComponent({
 			fssData,
 			fssHeaders,
 			formHeaders,
+			isShowHeaders,
 			// fssItems,
 
 			xTable,
