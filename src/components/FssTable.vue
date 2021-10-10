@@ -174,6 +174,7 @@ export default defineComponent({
 						fss_cellChanged(line, amtYr)
 					})
 				}
+				$store.commit('uGradeModule/setFssData', fssData)
 			} catch (e) {
 				// console.log('error 2:' + e)
 			}

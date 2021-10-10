@@ -40,6 +40,8 @@ import {defineComponent, ref} from 'vue'
 import FssTable from '../components/FssTable.vue'
 import {useRouter} from 'vue-router'
 import {useStore} from 'vuex'
+import { useQuasar } from 'quasar'
+
 
 export default defineComponent({
   name: 'FssModule',
@@ -51,6 +53,7 @@ export default defineComponent({
     const router = useRouter()
 
     const store = useStore()
+    const $q = useQuasar()
 
     const tbButtons = [
         {name: 'NewFssYr', icon: 'fas fa-file-import', tooltip: 'Add a new financial year'},
@@ -58,12 +61,18 @@ export default defineComponent({
         {name: 'Close', icon: 'far fa-times-circle', action: 'gotoRoute', tooltip: 'Close - back to customer info screen'},
     ]
 
-    const toolbarClick = (name) => {
+    const toolbarClick = async name => {
       if (name =='Close') {
         router.push({name: 'CustInfo'})
       }else if (name == 'NewFssYr'){
         alert ('insert new fss year function to-be-done')
-      
+      }else if (name == 'Save'){
+				await store.dispatch('uGradeModule/saveFssData', store.getters['uGradeModule/getFssData'])
+				$q.notify({
+					message: 'Save completed!',
+					position: 'top',
+					closeBtn: 'x',
+				})
       }else{
         alert ('function to-be-done')
       }
